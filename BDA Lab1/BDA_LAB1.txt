@@ -1,0 +1,94 @@
+> show dbs;
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use college;
+switched to db college
+> db;
+college
+> show dbs;
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db.createCollection("Student");
+{ "ok" : 1 }
+> show dbs;
+admin    0.000GB
+college  0.000GB
+config   0.000GB
+local    0.000GB
+> db.Student.insert({_id:1,StudName:&quot;MichelleJacintha&quot;,Grade:&quot;VII&quot;,Hobbies:&quot;In
+...
+...
+>
+> db.Student.insert({_id:1,StudNmae:"Ragz",Grade:"V",Hobbies:"Playing Cricket"});
+WriteResult({ "nInserted" : 1 })
+> db.createCollection("Faculty");
+{ "ok" : 1 }
+> db.createCollection("COE");
+{ "ok" : 1 }
+> db.createCollection("Library");
+{ "ok" : 1 }
+> db.createCollection("Admission");
+{ "ok" : 1 }
+> db.createCollection("College Festival");
+{ "ok" : 1 }
+> db.Student.insert({_id:2,StudNmae:"obed",Grade:"V",Hobbies:"Watching Cricket",cgpa:"9.0",USN:"55"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:3,StudNmae:"Niranjan",Grade:"V",Hobbies:"cooking",cgpa:"9.1",USN:"54"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:4,StudNmae:"RagzBiradar",Grade:"V",Hobbies:"Playing Cricket",cgpa:"9.09",USN:"69"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:5,StudNmae:"Tarun",Grade:"V",Hobbies:"News watching",cgpa:"9",USN:"100"});
+WriteResult({ "nInserted" : 1 })
+
+> db.COE.insert({_id:1,COENmae:"Dr.ABCD",Desig:"Prof",FacID:"01",specilization:"Thermal Physics",dept:"Physics"});
+WriteResult({ "nInserted" : 1 })
+> db.Library.insert({_id:1,Nmae:"Tej",Desig:"Cheif Librarian",ID:"01",DOJ:"24 sep",Location:"Frazer Town"});
+WriteResult({ "nInserted" : 1 })
+> db.Library.insert({_id:2,Nmae:"Ramya",Desig:"Librarian",ID:"02",DOJ:"12 sep",Location:"jayanagar"});
+WriteResult({ "nInserted" : 1 })
+> db.Library.insert({_id:3,Nmae:"Shweta",Desig:"Librarian",ID:"03",DOJ:"13 sep",Location:"Belgum"});
+WriteResult({ "nInserted" : 1 })
+> db.Admission.insert({_id:1,Nmae:"Yamuna",Desig:"Administrator",ID:"01",DOJ:"24 sep",Location:"Tumkur"});
+WriteResult({ "nInserted" : 1 })
+> db.Admission.insert({_id:2,Nmae:"Salina",Desig:"Accountant",ID:"02",DOJ:"25 sep",Location:"Sirsi"});
+WriteResult({ "nInserted" : 1 })
+> db.Admission.insert({_id:3,Nmae:"Shubha",Desig:"cheif Accountant",ID:"03",DOJ:"22 sep",Location:"Gadag"});
+WriteResult({ "nInserted" : 1 })
+> db.["College Festival"].insert({_id:1,Collage:"BMSCE",Nmae:"Phase Shift",sponsor:"Google",sdate:"14 sep",Edate:"15 sep"});
+2020-09-24T11:29:53.535+0530 E QUERY    [js] SyntaxError: missing name after . operator @(shell):1:3
+> db["College Festival"].insert({_id:1,Collage:"BMSCE",Nmae:"Phase Shift",sponsor:"Google",sdate:"14 sep",Edate:"15 sep"});
+WriteResult({ "nInserted" : 1 })
+> db["College Festival"].insert({_id:2,Collage:"BMSCE",Nmae:"UTSAV",sponsor:"microsoft",sdate:"4 mar",Edate:"5 mar"});
+WriteResult({ "nInserted" : 1 })
+> db["College Festival"].insert({_id:3,Collage:"BMSCE",Nmae:"protocal day",sponsor:"Nutanix",sdate:"30 mar",Edate:"1 apr"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.find();
+{ "_id" : 1, "StudNmae" : "Ragz", "Grade" : "V", "Hobbies" : "Playing Cricket" }
+{ "_id" : 2, "StudNmae" : "obed", "Grade" : "V", "Hobbies" : "Watching Cricket", "cgpa" : "9.0", "USN" : "55" }
+{ "_id" : 3, "StudNmae" : "Niranjan", "Grade" : "V", "Hobbies" : "cooking", "cgpa" : "9.1", "USN" : "54" }
+{ "_id" : 4, "StudNmae" : "RagzBiradar", "Grade" : "V", "Hobbies" : "Playing Cricket", "cgpa" : "9.09", "USN" : "69" }
+{ "_id" : 5, "StudNmae" : "Tarun", "Grade" : "V", "Hobbies" : "News watching", "cgpa" : "9", "USN" : "100" }
+> db.COE.find();
+{ "_id" : 1, "COENmae" : "Dr.ABCD", "Desig" : "Prof", "FacID" : "01", "specilization" : "Thermal Physics", "dept" : "Physics" }
+> db.Faculty.find()
+{ "_id" : 1, "FacNmae" : "Pallavi G B ", "Desig" : "AsistProf", "FacID" : "01", "specilization" : "cloud computing", "dept" : "CSE" }
+{ "_id" : 2, "FacNmae" : "Veena Jawali", "Desig" : "AsistProf", "FacID" : "02", "specilization" : "Fluid Mechanics", "dept" : "Maths" }
+{ "_id" : 3, "FacNmae" : "Latha N R", "Desig" : "AsistProf", "FacID" : "03", "specilization" : "OS", "dept" : "CSE" }
+{ "_id" : 4, "FacNmae" : "Shyamala", "Desig" : "AsistProf", "FacID" : "04", "specilization" : "Networks", "dept" : "CSE" }
+> db.Library.find()
+{ "_id" : 1, "Nmae" : "Tej", "Desig" : "Cheif Librarian", "ID" : "01", "DOJ" : "24 sep", "Location" : "Frazer Town" }
+{ "_id" : 2, "Nmae" : "Ramya", "Desig" : "Librarian", "ID" : "02", "DOJ" : "12 sep", "Location" : "jayanagar" }
+{ "_id" : 3, "Nmae" : "Shweta", "Desig" : "Librarian", "ID" : "03", "DOJ" : "13 sep", "Location" : "Belgum" }
+> db.Admission.find()
+{ "_id" : 1, "Nmae" : "Yamuna", "Desig" : "Administrator", "ID" : "01", "DOJ" : "24 sep", "Location" : "Tumkur" }
+{ "_id" : 2, "Nmae" : "Salina", "Desig" : "Accountant", "ID" : "02", "DOJ" : "25 sep", "Location" : "Sirsi" }
+{ "_id" : 3, "Nmae" : "Shubha", "Desig" : "cheif Accountant", "ID" : "03", "DOJ" : "22 sep", "Location" : "Gadag" }
+> db["College Festival"].find()
+{ "_id" : 1, "Collage" : "BMSCE", "Nmae" : "Phase Shift", "sponsor" : "Google", "sdate" : "14 sep", "Edate" : "15 sep" }
+{ "_id" : 2, "Collage" : "BMSCE", "Nmae" : "UTSAV", "sponsor" : "microsoft", "sdate" : "4 mar", "Edate" : "5 mar" }
+{ "_id" : 3, "Collage" : "BMSCE", "Nmae" : "protocal day", "sponsor" : "Nutanix", "sdate" : "30 mar", "Edate" : "1 apr" }
+
+
+
