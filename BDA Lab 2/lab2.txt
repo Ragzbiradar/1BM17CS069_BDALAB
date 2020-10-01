@@ -1,0 +1,245 @@
+db.Employee.insert({_id:1, "EmployeeID":"2017069", "Name":"Raghavendra", "Department":"CSE", "Age":21,DeptNo.:1001});
+
+db.Employee.save({_id:2, "EmployeeID":"2017056", "Name":"Niranjan", "Department":"CSE", "Age":21,DeptNo:1001});
+
+db.Employee.update({_id:1, "EmployeeID":"2016056", "Name":"Raghavendra", "Department":"CSE", "Age":21},{$set:{DeptNo:1001}},{upsert:true});
+
+db.Employee.insert({_id:4, "EmployeeID":"2017055", "Name":"Obed Junias", "Department":"ISE", "Age":21,DeptNo:1002});
+
+db.Employee.insert({_id:5, "EmployeeID":"2017111", "Name":"Tarun MK", "Department":"ECE", "Age":21,DeptNo:1003});
+
+db.Department.insert({_id:1,deptname:"CSE",deptno:1001});
+
+db.Department.save({_id:2,deptname:"ISE",deptno:1002});
+
+db.Department.update({_id:3,deptname:"ECE"},{$set:{deptno:1003}},{upsert:true});
+
+
+db.Department.insert({_id:4,deptname:"EEE",deptno:1004});
+
+
+db.Department.insert({_id:5,deptname:"ME",deptno:1005});
+
+db.Employee.update({_id:3},{$set:{"Name":"Abhishek","Age":30}},{upsert:false});
+
+
+db.Employee.find({Name:/^A/});
+
+
+db.Employee.find({ "DeptNo": { "$gte": 1001,"$lte":1005}},{Name:1,DeptNo:1,_id:0});
+
+db.Employee.find({ "Age": { "$gt": 30 }});
+
+db.getCollection("employee").find({}).pretty()
+
+
+db.getCollection("department").find({}).pretty()
+
+
+
+
+
+> use company
+switched to db company
+> db
+company
+> db.createCollection("Employee");
+{ "ok" : 1 }
+> db.createCollection("Department");
+{ "ok" : 1 }
+> db.Employee.insert({
+...     _id:1,
+...     employeeName:"sanjana",
+...     age:20,
+...     departmentNumber:1001
+... })
+WriteResult({ "nInserted" : 1 })
+> db.Employee.find();
+{ "_id" : 1, "employeeName" : "sanjana", "age" : 20, "departmentNumber" : 1001 }
+> db.Employee.drop()
+true
+> db.createCollection("Employee");
+{ "ok" : 1 }
+> db.Employee.insert({_id:1, "EmployeeID":"2017069", "Name":"Raghavendra", "Department":"CSE", "Age":21,DeptNo.:1001});
+2020-10-01T15:04:00.466+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:108
+> db.Employee.insert({_id:1, "EmployeeID":"2017069", "Name":"Raghavendra", "Department":"CSE", "Age":21,DeptNo:1001});
+WriteResult({ "nInserted" : 1 })
+> db.Employee.save({_id:2, "EmployeeID":"2017056", "Name":"Niranjan", "Department":"CSE", "Age":21,DeptNo:1001});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 2 })
+> db.Employee.update({_id:1, "EmployeeID":"2016056", "Name":"Raghavendra", "Department":"CSE", "Age":21},{$set:{DeptNo:1001}},{upsert:true});
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 0,
+        "nModified" : 0,
+        "writeError" : {
+                "code" : 11000,
+                "errmsg" : "E11000 duplicate key error collection: company.Employee index: _id_ dup key: { : 1.0 }"
+        }
+})
+> db.Employee.update({_id:3, "EmployeeID":"2016056", "Name":"Raghavendra", "Department":"CSE", "Age":21},{$set:{DeptNo:1001}},{upsert:true});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 3 })
+> db.Employee.insert({_id:4, "EmployeeID":"2017055", "Name":"Obed Junias", "Department":"ISE", "Age":21,DeptNo.:1002});
+2020-10-01T15:07:07.233+0530 E QUERY    [js] SyntaxError: missing : after property id @(shell):1:108
+> db.Employee.insert({_id:4, "EmployeeID":"2017055", "Name":"Obed Junias", "Department":"ISE", "Age":21,DeptNo:1002});
+WriteResult({ "nInserted" : 1 })
+> db.Employee.insert({_id:5, "EmployeeID":"2017111", "Name":"Tarun MK", "Department":"ECE", "Age":21,DeptNo:1003});
+WriteResult({ "nInserted" : 1 })
+> db.Department.insert({_id:1,deptname:"CSE",deptno:1001});
+WriteResult({ "nInserted" : 1 })
+> db.Department.save({_id:2,deptname:"ISE",deptno:1002});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 2 })
+>
+> db.Department.update({_id:3,deptname:"ECE"}{$set:{deptno:1003}},{upsert:true});
+2020-10-01T15:11:58.273+0530 E QUERY    [js] SyntaxError: missing ) after argument list @(shell):1:43
+> db.Department.update({_id:3,deptname:"ECE"},{$set:{deptno:1003}},{upsert:true});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 3 })
+> db.Department.insert({_id:4,deptname:"EEE",deptno:1004});
+WriteResult({ "nInserted" : 1 })
+> db.Department.insert({_id:5,deptname:"ME",deptno:1005});
+WriteResult({ "nInserted" : 1 })
+> db.Employee.update({_id:3},{$set:{"Name":"Abhishek","Age":30}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find().pretty();
+{
+        "_id" : 1,
+        "EmployeeID" : "2017069",
+        "Name" : "Raghavendra",
+        "Department" : "CSE",
+        "Age" : 21,
+        "DeptNo" : 1001
+}
+{
+        "_id" : 2,
+        "EmployeeID" : "2017056",
+        "Name" : "Niranjan",
+        "Department" : "CSE",
+        "Age" : 21,
+        "DeptNo" : 1001
+}
+{
+        "_id" : 3,
+        "Age" : 30,
+        "Department" : "CSE",
+        "EmployeeID" : "2016056",
+        "Name" : "Abhishek",
+        "DeptNo" : 1001
+}
+{
+        "_id" : 4,
+        "EmployeeID" : "2017055",
+        "Name" : "Obed Junias",
+        "Department" : "ISE",
+        "Age" : 21,
+        "DeptNo" : 1002
+}
+{
+        "_id" : 5,
+        "EmployeeID" : "2017111",
+        "Name" : "Tarun MK",
+        "Department" : "ECE",
+        "Age" : 21,
+        "DeptNo" : 1003
+}
+> db.Employee.update({_id:4},{$set:{DOJ:"12 sep","Age":30}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find({_id:4});
+{ "_id" : 4, "EmployeeID" : "2017055", "Name" : "Obed Junias", "Department" : "ISE", "Age" : 30, "DeptNo" : 1002, "DOJ" : "12 sep" }
+> db.Employee.update({_id:4},{$unset:{DOJ:""}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Employee.find({_id:4});
+{ "_id" : 4, "EmployeeID" : "2017055", "Name" : "Obed Junias", "Department" : "ISE", "Age" : 30, "DeptNo" : 1002 }
+> db.getCollection("employee").find({}).pretty()
+> db.getCollection("employee").find({}).pretty()
+> db.getCollection("Employee").find({}).pretty()
+{
+        "_id" : 1,
+        "EmployeeID" : "2017069",
+        "Name" : "Raghavendra",
+        "Department" : "CSE",
+        "Age" : 21,
+        "DeptNo" : 1001
+}
+{
+        "_id" : 2,
+        "EmployeeID" : "2017056",
+        "Name" : "Niranjan",
+        "Department" : "CSE",
+        "Age" : 21,
+        "DeptNo" : 1001
+}
+{
+        "_id" : 3,
+        "Age" : 30,
+        "Department" : "CSE",
+        "EmployeeID" : "2016056",
+        "Name" : "Abhishek",
+        "DeptNo" : 1001
+}
+{
+        "_id" : 4,
+        "EmployeeID" : "2017055",
+        "Name" : "Obed Junias",
+        "Department" : "ISE",
+        "Age" : 30,
+        "DeptNo" : 1002
+}
+{
+        "_id" : 5,
+        "EmployeeID" : "2017111",
+        "Name" : "Tarun MK",
+        "Department" : "ECE",
+        "Age" : 21,
+        "DeptNo" : 1003
+}
+> db.getCollection("Department").find({}).pretty()
+{ "_id" : 1, "deptname" : "CSE", "deptno" : 1001 }
+{ "_id" : 2, "deptname" : "ISE", "deptno" : 1002 }
+{ "_id" : 3, "deptname" : "ECE", "deptno" : 1003 }
+{ "_id" : 4, "deptname" : "EEE", "deptno" : 1004 }
+{ "_id" : 5, "deptname" : "ME", "deptno" : 1005 }
+>
+> db.Employee.find({name:{$regex:{"^A"}})
+...
+...
+> db.Employee.find({Name:{$regex:{"^A"}})
+...
+...
+> db.Employee.find({Name:{$regex:{"^A"}});
+...
+...
+> db.Employee.find({Name:"^A"});
+> db.Employee.find({name:{$regex:"^A"});
+...
+...
+> db.Employee.find({Name:{$regex:"^A"});
+...
+...
+> db.Employee.find({Name:{$regex:{"^A"}});
+...
+...
+> db.Employee.find({Name:{$regex:{'^A'}});
+...
+...
+> db.Employee.find({Name:/^A});
+2020-10-01T15:52:29.103+0530 E QUERY    [js] SyntaxError: unterminated regular expression literal @(shell):1:23
+> db.Employee.find({Name:'/^A'});
+> db.Employee.find({Name:/^A});
+2020-10-01T15:53:19.670+0530 E QUERY    [js] SyntaxError: unterminated regular expression literal @(shell):1:23
+> db.Employee.find({Name:/^A/});
+{ "_id" : 3, "Age" : 30, "Department" : "CSE", "EmployeeID" : "2016056", "Name" : "Abhishek", "DeptNo" : 1001 }
+> db.Employee.find({ "deptno": { "$gte": 1001,"$lte":1005}},{Name:1,deptno:1,_id:0});
+>
+>
+> db.Employee.find({ "DeptNo": { "$gte": 1001,"$lte":1005}},{Name:1,DeptNo:1,_id:0});
+{ "Name" : "Raghavendra", "DeptNo" : 1001 }
+{ "Name" : "Niranjan", "DeptNo" : 1001 }
+{ "Name" : "Abhishek", "DeptNo" : 1001 }
+{ "Name" : "Obed Junias", "DeptNo" : 1002 }
+{ "Name" : "Tarun MK", "DeptNo" : 1003 }
+> db.Employee.find({ "Age": { "$gt": 30 }});
+> db.Employee.find({ "Age": { "$gt": 20 }});
+{ "_id" : 1, "EmployeeID" : "2017069", "Name" : "Raghavendra", "Department" : "CSE", "Age" : 21, "DeptNo" : 1001 }
+{ "_id" : 2, "EmployeeID" : "2017056", "Name" : "Niranjan", "Department" : "CSE", "Age" : 21, "DeptNo" : 1001 }
+{ "_id" : 3, "Age" : 30, "Department" : "CSE", "EmployeeID" : "2016056", "Name" : "Abhishek", "DeptNo" : 1001 }
+{ "_id" : 4, "EmployeeID" : "2017055", "Name" : "Obed Junias", "Department" : "ISE", "Age" : 30, "DeptNo" : 1002 }
+{ "_id" : 5, "EmployeeID" : "2017111", "Name" : "Tarun MK", "Department" : "ECE", "Age" : 21, "DeptNo" : 1003 }
