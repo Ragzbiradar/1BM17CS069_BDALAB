@@ -1,0 +1,170 @@
+1)
+> use studentdb
+switched to db studentdb
+
+> db.createCollection("Student");
+
+> db.Student.insert({_id:1,name:"Raghavendra",rollno:10,age:21,concactno:1234567890,emailid:"rgb@gmail.com"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:2,name:"ABC",rollno:11,age:21,concactno:9874561230,emailid:"abc@gmail.com"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:3,name:"Obed",rollno:12,age:21,concactno:4567891230,emailid:"oj@gmail.com"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:4,name:"Niranjan",rollno:13,age:21,concactno:3698521470,emailid:"niru@gmail.com"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({_id:5,name:"Tarun",rollno:14,age:21,concactno:7412589630,emailid:"tmk@gmail.com"});
+WriteResult({ "nInserted" : 1 })
+
+> db.Student.update({rollno:10},{$set:{emailid:"raghavendragb@gmail.com"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Student.find().pretty();
+{
+        "_id" : 1,
+        "name" : "Raghavendra",
+        "rollno" : 10,
+        "age" : 21,
+        "concactno" : 1234567890,
+        "emailid" : "raghavendragb@gmail.com"
+}
+{
+        "_id" : 2,
+        "name" : "ABC",
+        "rollno" : 11,
+        "age" : 21,
+        "concactno" : 9874561230,
+        "emailid" : "abc@gmail.com"
+}
+{
+        "_id" : 3,
+        "name" : "Obed",
+        "rollno" : 12,
+        "age" : 21,
+        "concactno" : 4567891230,
+        "emailid" : "oj@gmail.com"
+}
+{
+        "_id" : 4,
+        "name" : "Niranjan",
+        "rollno" : 13,
+        "age" : 21,
+        "concactno" : 3698521470,
+        "emailid" : "niru@gmail.com"
+}
+{
+        "_id" : 5,
+        "name" : "Tarun",
+        "rollno" : 14,
+        "age" : 21,
+        "concactno" : 7412589630,
+        "emailid" : "tmk@gmail.com"
+}
+
+
+> db.Student.update({rollno:11},{$set:{name:"FEM"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Student.find().pretty();
+{
+        "_id" : 1,
+        "name" : "Raghavendra",
+        "rollno" : 10,
+        "age" : 21,
+        "concactno" : 1234567890,
+        "emailid" : "raghavendragb@gmail.com"
+}
+{
+        "_id" : 2,
+        "name" : "FEM",
+        "rollno" : 11,
+        "age" : 21,
+        "concactno" : 9874561230,
+        "emailid" : "abc@gmail.com"
+}
+{
+        "_id" : 3,
+        "name" : "Obed",
+        "rollno" : 12,
+        "age" : 21,
+        "concactno" : 4567891230,
+        "emailid" : "oj@gmail.com"
+}
+{
+        "_id" : 4,
+        "name" : "Niranjan",
+        "rollno" : 13,
+        "age" : 21,
+        "concactno" : 3698521470,
+        "emailid" : "niru@gmail.com"
+}
+{
+        "_id" : 5,
+        "name" : "Tarun",
+        "rollno" : 14,
+        "age" : 21,
+        "concactno" : 7412589630,
+        "emailid" : "tmk@gmail.com"
+}
+
+
+C:\Program Files\MongoDB\Server\4.0\bin>mongoexport  --collection=Student --db=studentdb --out="C:\Users\Raghavendra\Documents\7th sem\BDA\BDA lab\1BM17CS069_BDALAB\BDA Lab3\student.csv"
+2020-10-08T15:19:27.662+0530    connected to: localhost
+2020-10-08T15:19:27.664+0530    exported 5 records
+
+
+> db.Student.drop();
+true
+
+
+C:\Program Files\MongoDB\Server\4.0\bin>mongoimport --collection=Student --db=studentdb --file="C:\Users\Raghavendra\Documents\7th sem\BDA\BDA lab\1BM17CS069_BDALAB\BDA Lab3\student.csv"
+2020-10-08T15:21:43.825+0530    connected to: localhost
+2020-10-08T15:21:44.026+0530    imported 5 documents
+
+> db.Student.find().pretty();
+{
+        "_id" : 1,
+        "name" : "Raghavendra",
+        "rollno" : 10,
+        "age" : 21,
+        "concactno" : 1234567890,
+        "emailid" : "raghavendragb@gmail.com"
+}
+{
+        "_id" : 5,
+        "name" : "Tarun",
+        "rollno" : 14,
+        "age" : 21,
+        "concactno" : 7412589630,
+        "emailid" : "tmk@gmail.com"
+}
+{
+        "_id" : 2,
+        "name" : "FEM",
+        "rollno" : 11,
+        "age" : 21,
+        "concactno" : 9874561230,
+        "emailid" : "abc@gmail.com"
+}
+{
+        "_id" : 3,
+        "name" : "Obed",
+        "rollno" : 12,
+        "age" : 21,
+        "concactno" : 4567891230,
+        "emailid" : "oj@gmail.com"
+}
+{
+        "_id" : 4,
+        "name" : "Niranjan",
+        "rollno" : 13,
+        "age" : 21,
+        "concactno" : 3698521470,
+        "emailid" : "niru@gmail.com"
+}
+
+
+
+
+
+2)
+
