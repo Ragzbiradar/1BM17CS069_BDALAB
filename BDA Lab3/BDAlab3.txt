@@ -167,4 +167,56 @@ C:\Program Files\MongoDB\Server\4.0\bin>mongoimport --collection=Student --db=st
 
 
 2)
+> use customerdb
+switched to db customerdb
+
+> db.createCollection("customer");
+{ "ok" : 1 }
+
+> db.customer.insert({_id:1,cust_id:"cu01",acc_bal:10000,acc_type:"X"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({_id:2,cust_id:"cu01",acc_bal:2000,acc_type:"X"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({_id:3,cust_id:"cu02",acc_bal:3000,acc_type:"Y"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({_id:4,cust_id:"cu03",acc_bal:4000,acc_type:"Z"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({_id:5,cust_id:"cu04",acc_bal:5000,acc_type:"Z"});
+WriteResult({ "nInserted" : 1 })
+
+> db.customer.find({acc_type:"Z",acc_bal:{$gt:1200}});
+{ "_id" : 4, "cust_id" : "cu03", "acc_bal" : 4000, "acc_type" : "Z" }
+{ "_id" : 5, "cust_id" : "cu04", "acc_bal" : 5000, "acc_type" : "Z" }
+
+> db.customer.aggregate([{$group:{_id:"$cust_id",min:{$min:"$acc_bal"},max:{$max:"$acc_bal"}}}]);
+{ "_id" : "cu04", "min" : 5000, "max" : 5000 }
+{ "_id" : "cu03", "min" : 4000, "max" : 4000 }
+{ "_id" : "cu02", "min" : 3000, "max" : 3000 }
+{ "_id" : "cu01", "min" : 2000, "max" : 10000 }
+
+> db.customer.find().pretty();
+{ "_id" : 1, "cust_id" : "cu01", "acc_bal" : 10000, "acc_type" : "X" }
+{ "_id" : 2, "cust_id" : "cu01", "acc_bal" : 2000, "acc_type" : "X" }
+{ "_id" : 3, "cust_id" : "cu02", "acc_bal" : 3000, "acc_type" : "Y" }
+{ "_id" : 4, "cust_id" : "cu03", "acc_bal" : 4000, "acc_type" : "Z" }
+{ "_id" : 5, "cust_id" : "cu04", "acc_bal" : 5000, "acc_type" : "Z" }
+
+C:\Program Files\MongoDB\Server\4.0\bin>mongoexport  --collection=customer --db=customerdb --out="C:\Users\Raghavendra\Documents\7th sem\BDA\BDA lab\1BM17CS069_BDALAB\BDA Lab3\customer.csv"
+2020-10-08T16:20:48.560+0530    connected to: localhost
+2020-10-08T16:20:48.569+0530    exported 5 records
+
+> db.customer.drop();
+true
+
+C:\Program Files\MongoDB\Server\4.0\bin>mongoimport --collection=customer --db=customerdb --file="C:\Users\Raghavendra\Documents\7th sem\BDA\BDA lab\1BM17CS069_BDALAB\BDA Lab3\customer.csv"
+2020-10-08T16:22:29.016+0530    connected to: localhost
+2020-10-08T16:22:29.224+0530    imported 5 documents
+
+> db.customer.find().pretty();
+{ "_id" : 1, "cust_id" : "cu01", "acc_bal" : 10000, "acc_type" : "X" }
+{ "_id" : 2, "cust_id" : "cu01", "acc_bal" : 2000, "acc_type" : "X" }
+{ "_id" : 3, "cust_id" : "cu02", "acc_bal" : 3000, "acc_type" : "Y" }
+{ "_id" : 4, "cust_id" : "cu03", "acc_bal" : 4000, "acc_type" : "Z" }
+{ "_id" : 5, "cust_id" : "cu04", "acc_bal" : 5000, "acc_type" : "Z" }
+
 
