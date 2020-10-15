@@ -1,0 +1,156 @@
+
+Assignment 1
+> use library
+switched to db library
+
+> db.createCollection("Book");
+{ "ok" : 1 }
+
+> db.book.save({_id:1,Category:"Machine Learning",BookName:"Machine Learning for Hackers",Author:"Drew Conway",qty:25,price:400,rol:30,pages:350});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 1 })
+
+> db.book.save({_id:2,Category:"Business Intelligence",BookName:"Fundamentals of Business Analytics",Author:"Seema Acharya",qty:55,price:500,rol:30,pages:250});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 2 })
+
+> db.book.save({_id:3,Category:"Analytics",BookName:"Competing on Analytics",Author:"Thomas",qty:8,price:150,rol:20,pages:150});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 3 })
+
+> db.book.save({_id:4,Category:"Visualisation",BookName:"Visualising Data",Author:"Ben Fry",qty:12,price:325,rol:6,pages:450});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 4 })
+
+> db.book.save({_id:5,Category:"Mining Web",BookName:"Learning R",Author:"Richard",qty:10,price:850,rol:10,pages:120});
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "_id" : 5 })
+
+
+> db.book.mapReduce(
+... function() {
+... let key = null, value = null;
+... if(this.pages >= 300){
+... key = "Big books";
+... value = this.pages;}
+... else{
+... key = "Small books";
+... value = this.pages;
+... }
+... emit(key, value);},
+... function(key, values){
+... return values.length;},
+... {
+... out: "Book_Records"
+... }
+... );
+{
+        "result" : "Book_Records",
+        "timeMillis" : 1428,
+        "counts" : {
+                "input" : 5,
+                "emit" : 5,
+                "reduce" : 2,
+                "output" : 2
+        },
+        "ok" : 1
+}
+
+
+> db.Book_Records.find();
+{ "_id" : "Big books", "value" : 2 }
+{ "_id" : "Small books", "value" : 3 }
+
+
+Assignment 3
+> use database1
+switched to db database1
+
+> db.createCollection("Country")
+{ "ok" : 1 }
+
+> db.Country.insert({_id:1,Cities:["Visakhapatnam","Hyderabad"]})
+WriteResult({ "nInserted" : 1 })
+
+> db.Country.insert({_id:2,Cities:["Pune","Mumbai"]})
+WriteResult({ "nInserted" : 1 })
+> db.Country.insert({_id:3,Cities:["Bangalore","Chennai"]})
+WriteResult({ "nInserted" : 1 })
+
+> db.Country.insert({_id:4,Cities:["Mysore","Tirupathi"]})
+WriteResult({ "nInserted" : 1 })
+
+
+>  db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad" ] }
+{ "_id" : 2, "Cities" : [ "Pune", "Mumbai" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore", "Chennai" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+
+> db.Country.find().limit(1)
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad" ] }
+
+> db.Country.find().skip(2).limit(2)
+{ "_id" : 3, "Cities" : [ "Bangalore", "Chennai" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+> db.Country.update({_id:1},{$push:{population:{Visakhapatnam:45,Hyderabad:50}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad" ], "population" : [ { "Visakhapatnam" : 45, "Hyderabad" : 50 } ] }
+{ "_id" : 2, "Cities" : [ "Pune", "Mumbai" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore", "Chennai" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+>> db.Country.update({_id:3},{$pop:{Cities:1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad" ], "population" : [ { "Visakhapatnam" : 45, "Hyderabad" : 50 } ] }
+{ "_id" : 2, "Cities" : [ "Pune", "Mumbai" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+> db.Country.update({Cities:"Pune"},{$pull:{Cities:'Pune'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad" ], "population" : [ { "Visakhapatnam" : 45, "Hyderabad" : 50 } ] }
+{ "_id" : 2, "Cities" : [ "Mumbai" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+> db.Country.update({_id:1},{$set:{'Cities.2':'Srinagar'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad", "Srinagar" ], "population" : [ { "Visakhapatnam" : 45, "Hyderabad" : 50 } ] }
+{ "_id" : 2, "Cities" : [ "Mumbai" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+>
+
+> db.Country.update({_id:2},{$addToSet:{Cities:"Jaipur"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.Country.find()
+{ "_id" : 1, "Cities" : [ "Visakhapatnam", "Hyderabad", "Srinagar" ], "population" : [ { "Visakhapatnam" : 45, "Hyderabad" : 50 } ] }
+{ "_id" : 2, "Cities" : [ "Mumbai", "Jaipur" ] }
+{ "_id" : 3, "Cities" : [ "Bangalore" ] }
+{ "_id" : 4, "Cities" : [ "Mysore", "Tirupathi" ] }
+
+
+
+Assignment 2
+C:\Program Files\MongoDB\Server\4.0\bin>mongoimport -d mongoDB -c MongoDBHandsOn --type csv --headerline --file "C:\Users\Raghavendra\Documents\bank-data.csv"
+2020-10-15T15:40:22.599+0530    connected to: localhost
+2020-10-15T15:40:22.801+0530    imported 600 documents
+
+> use mongoDB
+switched to db mongoDB
+
+> db.MongoDBHandsOn.aggregate([
+... { $group : { _id: null, sum: {$sum:"$children"} } }
+... ])
+{ "_id" : null, "sum" : 607 }
+
+> db.MongoDBHandsOn.aggregate([
+... { $group : { _id: "Avg of Age", avg: {$avg:"$age"} } }
+... ])
+{ "_id" : "Avg of Age", "avg" : 42.395 }
