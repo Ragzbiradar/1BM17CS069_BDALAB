@@ -1,0 +1,4 @@
+1101,Raghavendra,Manager,45000
+1102,Yamuna B S,Developer,40000
+1103,Obed Junias,Analyst,35000
+1104,Niranjan V S,Operations,25000
